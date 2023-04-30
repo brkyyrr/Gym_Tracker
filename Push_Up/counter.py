@@ -81,9 +81,6 @@ with mp_pose.Pose( min_detection_confidence=0.5,
             landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].visibility = 0
             landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].visibility = 0
 
-            left_ear = [landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].x,landmarks[mp_pose.PoseLandmark.LEFT_EAR.value].y]
-            right_ear = [landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].y]
-
             midpoint_shoulder_x = (int(shoulder[0] * image_width )+ int(shoulder_r[0] * image_width))/2
             midpoint_shoulder_y = (int(shoulder[1] * image_height )+ int(shoulder_r[1] * image_height))/2
 
@@ -95,7 +92,6 @@ with mp_pose.Pose( min_detection_confidence=0.5,
 
             neck_point_x = (int(nose[0] * image_width )+ int(midpoint_shoulder_x))/2
             neck_point_y = (int(nose[1] * image_height) + int(midpoint_shoulder_y))/2
-
 
             left_arm_angle = int(calculate_angle(shoulder, elbow, wrist))
             right_arm_angle = int(calculate_angle(shoulder_r, elbow_r, wrist_r))
@@ -128,7 +124,6 @@ with mp_pose.Pose( min_detection_confidence=0.5,
                     up_pos = None
                     down_pos = None
                     pushup_pos = None 
-
 
             cv2.line(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
             cv2.line(image,(int(shoulder_r[0]* image_width),int(shoulder_r[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
