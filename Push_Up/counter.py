@@ -105,25 +105,23 @@ with mp_pose.Pose( min_detection_confidence=0.5,
             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].visibility = 0
             landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].visibility = 0
 
-            if 'PushUp' == 'PushUp':
-                
-                if left_arm_angle > 165:
-                    up_pos = 'Up'
-                    display_pos = 'Up'
+            if left_arm_angle > 165:
+                up_pos = 'Up'
+                display_pos = 'Up'
 
-                if left_arm_angle < 110 and up_pos == 'Up':
-                    down_pos = 'Down'
-                    display_pos = 'Down'    
+            if left_arm_angle < 110 and up_pos == 'Up':
+                down_pos = 'Down'
+                display_pos = 'Down'    
 
-                if left_arm_angle > 165 and down_pos == 'Down':
+            if left_arm_angle > 165 and down_pos == 'Down':
 
-                    pushup_pos = "up"
-                    display_pos = "up"
-                    push_up_counter += 1
+                pushup_pos = "up"
+                display_pos = "up"
+                push_up_counter += 1
 
-                    up_pos = None
-                    down_pos = None
-                    pushup_pos = None 
+                up_pos = None
+                down_pos = None
+                pushup_pos = None 
 
             cv2.line(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
             cv2.line(image,(int(shoulder_r[0]* image_width),int(shoulder_r[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
@@ -141,8 +139,7 @@ with mp_pose.Pose( min_detection_confidence=0.5,
             
             cv2.circle(image,(int(based_mid_x),int(based_mid_y)),4,(255,255,255),5)
 
-            if 'PushUp' == 'PushUp':
-                cv2.putText(image, 'Sayac: ' + str(push_up_counter), (image_width-200, 50), cv2.FONT_HERSHEY_COMPLEX, 0.9, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(image, 'Sayac: ' + str(push_up_counter), (image_width-200, 50), cv2.FONT_HERSHEY_COMPLEX, 0.9, (255, 255, 255), 2, cv2.LINE_AA)
 
         except:
             pass
