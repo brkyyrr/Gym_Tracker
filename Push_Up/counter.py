@@ -125,15 +125,13 @@ with mp_pose.Pose( min_detection_confidence=0.5,
                 down_pos = None
                 pushup_pos = None 
 
-                sound=gTTS(text=str(push_up_counter),lang="tr",slow=False)
-                file = str(push_up_counter)+".mp3"
-                sound.save(file)
-                playsound(file)
-                print(push_up_counter)
-                # sound=gTTS(text=str(push_up_counter),lang="tr",slow=True)
-                # sound.save(str(push_up_counter)+".mp3")
-                # playsound(str(push_up_counter)+".mp3")
-            os.remove(file)
+                # sound=gTTS(text=str(push_up_counter),lang="tr",slow=False)
+                # file = str(push_up_counter)+".mp3"
+                # sound.save(file)
+                # playsound(file)
+                # print(push_up_counter)
+
+            # os.remove(file)
             cv2.line(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
             cv2.line(image,(int(shoulder_r[0]* image_width),int(shoulder_r[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
             cv2.line(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),(int(elbow[0]* image_width),int(elbow[1]* image_height)),(255,255,255),3)
