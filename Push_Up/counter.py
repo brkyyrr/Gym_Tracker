@@ -1,6 +1,9 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+from gtts import gTTS
+from playsound import  playsound
+import os
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -95,6 +98,12 @@ with mp_pose.Pose( min_detection_confidence=0.5,
 
             left_arm_angle = int(calculate_angle(shoulder, elbow, wrist))
             right_arm_angle = int(calculate_angle(shoulder_r, elbow_r, wrist_r))
+            left_leg_angle = int(calculate_angle(left_hip, left_knee, left_ankle))
+            right_leg_angle = int(calculate_angle(right_hip, right_knee, right_ankle))
+            left_arm_length = np.linalg.norm(np.array(shoulder) - np.array(elbow))
+
+            mid_point_x = (int(left_hip[0] * image_width )+ int(right_hip[0] * image_width))/2
+            mid_point_y = (int(left_hip[1] * image_height)+ int(right_hip[1] * image_height))/2
 
             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].visibility = 0
             landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].visibility = 0
@@ -112,17 +121,27 @@ with mp_pose.Pose( min_detection_confidence=0.5,
                 pushup_pos = "up"
                 display_pos = "up"
                 push_up_counter += 1
-
-                up_pos = None
+                p_pos = None
                 down_pos = None
                 pushup_pos = None 
 
+                sound=gTTS(text=str(push_up_counter),lang="tr",slow=False)
+                file = str(push_up_counter)+".mp3"
+                sound.save(file)
+                playsound(file)
+                print(push_up_counter)
+                # sound=gTTS(text=str(push_up_counter),lang="tr",slow=True)
+                # sound.save(str(push_up_counter)+".mp3")
+                # playsound(str(push_up_counter)+".mp3")
+            os.remove(file)
             cv2.line(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
             cv2.line(image,(int(shoulder_r[0]* image_width),int(shoulder_r[1]* image_height)),(int(neck_point_x),int(neck_point_y)),(255,255,255),3)
             cv2.line(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),(int(elbow[0]* image_width),int(elbow[1]* image_height)),(255,255,255),3)
             cv2.line(image,(int(shoulder_r[0]* image_width),int(shoulder_r[1]* image_height)),(int(elbow_r[0]* image_width),int(elbow_r[1]* image_height)),(255,255,255),3)
 
             cv2.line(image,(int(neck_point_x),int(neck_point_y)),(int(based_mid_x),int(based_mid_y)),(255,255,255),3,cv2.LINE_4)
+            cv2.line(image,(int(based_mid_x),int(based_mid_y)),(int(left_hip[0] * image_width ),(int(left_hip[1] * image_height))),(255,255,255),3,cv2.LINE_8)
+            cv2.line(image,(int(based_mid_x),int(based_mid_y)),(int(right_hip[0] * image_width ),(int(right_hip[1] * image_height))),(255,255,255),3,cv2.LINE_8)
             cv2.circle(image,(int(neck_point_x),int(neck_point_y)),4,(255,255,255),5)
 
             cv2.circle(image,(int(shoulder[0]* image_width),int(shoulder[1]* image_height)),4,(255,255,255),3)
@@ -147,6 +166,7 @@ with mp_pose.Pose( min_detection_confidence=0.5,
 
         if cv2.waitKey(1) & 0xFF == 27:
             break
+    
 
     vid.release()
     cv2.destroyAllWindows()
