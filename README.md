@@ -18,6 +18,12 @@
   <li>Performansın attırılması için kodlarda düzenleme yapılmıştır.</li>
 </ul>
 
+Referans 
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=06TE_U21FK4&t=2s">Nicholas Renotte - AI Pose Estimation with Python and MediaPipe</a></li>
+</ul>
+
+
 
 
 

@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from gtts import gTTS
+#playsound==1.2.2
 from playsound import  playsound
 import os
 
